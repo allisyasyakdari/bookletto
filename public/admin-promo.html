@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bookletto — Promo & Voucher (Admin)</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#081126; --panel:#0d2333; --bd: rgba(255,255,255,0.06);
+      --gold:#c9a63a; --gold-2:#e2ba4a; --muted:rgba(255,255,255,0.32);
+      --glass: rgba(255,255,255,0.03);
+      --ff: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      --ff-display: 'Fraunces', Georgia, serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:var(--ff);background:linear-gradient(180deg,#04101e 0%, #071828 100%);color:#e9f0f7}
+    .app{display:flex;min-height:100vh}
+    .sidebar{width:220px;min-height:100vh;background:linear-gradient(180deg,var(--bg),#071421);border-right:1px solid var(--bd);display:flex;flex-direction:column;position:fixed}
+    .sb-logo{padding:20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+    .sb-logo-text{font-family:var(--ff-display);font-size:20px;font-weight:700;color:#fff}
+    .sb-logo-text em{color:var(--gold);font-style:normal}
+    .sb-admin-badge{font-size:11px;font-weight:700;background:rgba(201,166,58,0.12);color:var(--gold);padding:6px 10px;border-radius:999px;border:1px solid rgba(201,166,58,0.12)}
+    .sb-body{flex:1;padding:12px 8px;overflow:auto}
+    .sb-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:8px 10px;margin-top:6px;display:block}
+    .sl{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:14px;text-decoration:none}
+    .sl:hover{background:var(--glass);color:#fff}
+    .sl.active{background:linear-gradient(90deg,rgba(201,166,58,0.08),rgba(226,186,74,0.02));color:#fff}
+    .sl-count{margin-left:auto;background:rgba(255,255,255,0.04);color:var(--muted);font-size:12px;padding:4px 8px;border-radius:999px}
+    .sb-divider{height:1px;background:var(--bd);margin:10px 8px}
+    .sb-user{padding:12px;border-top:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+    .sb-av{width:36px;height:36px;border-radius:8px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#071421}
+
+    .main{margin-left:220px;flex:1;display:flex;flex-direction:column}
+    .topbar{height:64px;background:linear-gradient(90deg,#081126,#071829);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:30}
+    .tb-left{display:flex;align-items:center;gap:12px}
+    .tb-page{font-family:var(--ff-display);font-size:18px;font-weight:700;color:#fff}
+    .tb-crumb{font-size:13px;color:var(--muted)}
+    .top-actions{display:flex;align-items:center;gap:10px}
+    .tib{width:36px;height:36px;border-radius:8px;border:1px solid var(--bd);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer}
+
+    .content{padding:22px;display:flex;flex-direction:column;gap:18px}
+
+    .hero{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .hero .title{font-family:var(--ff-display);font-size:24px;font-weight:700;color:#fff}
+    .hero .subtitle{font-size:12px;color:var(--muted)}
+    .actions{display:flex;gap:10px}
+    .btn{padding:10px 14px;border-radius:10px;border:1px solid var(--bd);cursor:pointer;font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,var(--gold),var(--gold-2));color:#062033;border:none}
+    .btn-outline{background:transparent;color:var(--muted)}
+
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .stat{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid var(--bd);border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px}
+    .stat .num{font-family:var(--ff-display);font-size:20px;font-weight:800;color:#fff}
+    .stat .label{font-size:12px;color:var(--muted)}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid var(--bd);border-radius:12px;padding:12px;overflow:auto}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    thead th{color:var(--muted);text-align:left;padding:12px;border-bottom:1px solid var(--bd);font-size:13px}
+    tbody td{padding:14px;border-bottom:1px dashed rgba(255,255,255,0.03);vertical-align:middle}
+    tbody tr:hover td{background:linear-gradient(90deg,rgba(255,255,255,0.01),transparent)}
+
+    .badge{display:inline-block;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:700}
+    .badge-navy{background:rgba(10,30,50,0.18);color:#9fc6ff}
+    .badge-green{background:rgba(34,197,94,0.12);color:#86efac}
+
+    .btn-action{background:transparent;border:1px solid var(--bd);padding:8px 10px;border-radius:8px;color:var(--muted);font-weight:700}
+    .btn-danger{background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.18);color:#FCA5A5}
+
+    @media (max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.sidebar{position:fixed;left:-9999px}.main{margin-left:0}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sb-logo"><div class="sb-logo-text">Book<em>letto</em></div><div class="sb-admin-badge">Admin</div></div>
+    <div class="sb-body">
+      <div class="sb-section">
+        <span class="sb-label">Utama</span>
+        <a href="#" class="sl"><span>🏠</span>Dashboard</a>
+        <a href="#" class="sl"><span>📚</span>Manajemen Buku <span class="sl-count">248</span></a>
+        <a href="#" class="sl"><span>👥</span>Pengguna <span class="sl-count">1.2k</span></a>
+        <a href="#" class="sl"><span>🛒</span>Pesanan <span class="sl-count" style="background:rgba(239,68,68,0.12);color:#FCA5A5">12</span></a>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <span class="sb-label">Konten</span>
+        <a href="#" class="sl active">🎟️ Promo & Voucher</a>
+        <a href="#" class="sl">⭐ Ulasan</a>
+        <a href="#" class="sl">📂 Kategori</a>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <span class="sb-label">Sistem</span>
+        <a href="#" class="sl">📊 Laporan</a>
+        <a href="#" class="sl">⚙️ Pengaturan</a>
+      </div>
+    </div>
+    <div class="sb-user"><div class="sb-av">AD</div><div><div style="font-weight:700">Admin</div><div style="font-size:12px;color:var(--muted)">Super Admin</div></div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="tb-left"><div class="tb-page">Promo & Voucher</div><div class="tb-crumb">bookletto / admin / promo</div></div>
+      <div class="top-actions"><button class="tib">🔔</button><div class="sb-av" style="width:36px;height:36px">AD</div></div>
+    </div>
+
+    <div class="content">
+      <div class="hero">
+        <div>
+          <div style="font-size:12px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase">Marketing</div>
+          <div class="title">Promo & <em style="font-style:italic;color:var(--gold)">Voucher</em></div>
+          <div class="subtitle">Kelola kode promo, kupon, dan diskon untuk kampanye penjualan.</div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-outline">Import CSV</button>
+          <button class="btn btn-primary">+ Buat Promo Baru</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-mini-icon">🎟️</div><div><div class="num">6</div><div class="label">Promo aktif</div></div></div>
+        <div class="stat"><div class="stat-mini-icon">🎫</div><div><div class="num">342</div><div class="label">Total klaim</div></div></div>
+        <div class="stat"><div class="stat-mini-icon">💸</div><div><div class="num">Rp 8,4jt</div><div class="label">Nilai diskon diberikan</div></div></div>
+        <div class="stat"><div class="stat-mini-icon">⏳</div><div><div class="num">2</div><div class="label">Segera berakhir</div></div></div>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama Promo</th><th>Kode</th><th>Tipe</th><th>Nilai</th><th>Klaim</th><th>Batas</th><th>Berlaku s.d.</th><th>Status</th><th style="text-align:right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700;color:#fff">Gratis Ongkir</td>
+              <td style="font-family:monospace;color:var(--gold);font-size:13px">FREEONGKIR</td>
+              <td><span class="badge badge-navy">Ongkir</span></td>
+              <td>Gratis</td>
+              <td>128</td>
+              <td>—</td>
+              <td style="color:var(--muted)">17 Mei 2025</td>
+              <td><span class="badge badge-green">Aktif</span></td>
+              <td style="text-align:right"><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-outline">Edit</button><button class="btn-danger">Nonaktifkan</button></div></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:#fff">Self-help 20%</td>
+              <td style="font-family:monospace;color:var(--gold);font-size:13px">SELFHELP20</td>
+              <td><span class="badge badge-navy">Diskon %</span></td>
+              <td>20%</td>
+              <td>87</td>
+              <td>500</td>
+              <td style="color:#FCD34D">20 Mei 2025</td>
+              <td><span class="badge badge-green">Aktif</span></td>
+              <td style="text-align:right"><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-outline">Edit</button><button class="btn-danger">Nonaktifkan</button></div></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:#fff">Member Baru</td>
+              <td style="font-family:monospace;color:var(--gold);font-size:13px">BOOKNEW25</td>
+              <td><span class="badge badge-navy">Potongan</span></td>
+              <td>Rp 25.000</td>
+              <td>56</td>
+              <td>—</td>
+              <td style="color:var(--muted)">30 Jun 2025</td>
+              <td><span class="badge badge-green">Aktif</span></td>
+              <td style="text-align:right"><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-outline">Edit</button><button class="btn-danger">Nonaktifkan</button></div></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:rgba(255,255,255,0.55)">Harbolnas Des</td>
+              <td style="font-family:monospace;color:rgba(255,255,255,0.32);font-size:13px">HARBOLNAS50</td>
+              <td><span class="badge badge-navy">Diskon %</span></td>
+              <td>50%</td>
+              <td>1.240</td>
+              <td>1.000</td>
+              <td style="color:var(--muted)">31 Des 2024</td>
+              <td><span class="badge badge-navy" style="opacity:.5">Berakhir</span></td>
+              <td style="text-align:right"><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-primary">Duplikat</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
