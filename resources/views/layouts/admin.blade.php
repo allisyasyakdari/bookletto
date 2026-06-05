@@ -26,7 +26,6 @@
                 <div class="px-4 pb-2 pt-4 text-xs font-semibold uppercase tracking-[0.25em] text-white/25">Konten</div>
                 <nav class="flex gap-2 overflow-x-auto px-4 pb-4 text-sm lg:block lg:space-y-1 lg:overflow-visible lg:px-4 lg:pb-6">
                     <a class="block whitespace-nowrap rounded-2xl px-4 py-3 transition {{ request()->routeIs('admin.promos.*') ? 'bg-white/10 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white' }}" href="{{ route('admin.promos.index') }}">Promo & Voucher</a>
-                    <a class="block whitespace-nowrap rounded-2xl px-4 py-3 transition {{ request()->routeIs('admin.reviews.*') ? 'bg-white/10 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white' }}" href="{{ route('admin.reviews.index') }}">Ulasan</a>
                     <a class="block whitespace-nowrap rounded-2xl px-4 py-3 transition {{ request()->routeIs('admin.categories.*') ? 'bg-white/10 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white' }}" href="{{ route('admin.categories.index') }}">Kategori</a>
                 </nav>
             </div>

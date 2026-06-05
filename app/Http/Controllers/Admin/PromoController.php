@@ -34,6 +34,8 @@ class PromoController extends Controller
             'expired_at' => 'nullable|date',
         ]);
 
+        $data['discount_amount'] = $data['discount_amount'] ?? 0;
+
         Promo::create($data);
 
         return redirect()->route('admin.promos.index')->with('status', 'Promo created.');
@@ -58,6 +60,8 @@ class PromoController extends Controller
             'min_purchase' => 'nullable|integer|min:0',
             'expired_at' => 'nullable|date',
         ]);
+
+        $data['discount_amount'] = $data['discount_amount'] ?? 0;
 
         $promo->update($data);
 

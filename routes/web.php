@@ -47,6 +47,14 @@ Route::middleware(['auth', 'customer'])->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout.create');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/checkout/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
+
+    // Checkout AJAX helpers
+    Route::post('/checkout/apply-promo', [CheckoutController::class, 'applyPromo'])->name('checkout.apply_promo');
+    Route::post('/checkout/remove-promo', [CheckoutController::class, 'removePromo'])->name('checkout.remove_promo');
+    Route::get('/checkout/cities', [CheckoutController::class, 'getCities'])->name('checkout.cities');
+    Route::get('/checkout/districts', [CheckoutController::class, 'getDistricts'])->name('checkout.districts');
+    Route::get('/checkout/shipping', [CheckoutController::class, 'getShipping'])->name('checkout.shipping');
+    Route::get('/checkout/payment-status/{order}', [CheckoutController::class, 'checkPayment'])->name('checkout.payment_status');
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
