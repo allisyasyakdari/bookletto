@@ -7,7 +7,7 @@
     <title>{{ $title ?? config('app.name', 'Bookletto') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bookletto-user-site">
     <header class="sticky top-0 z-50 border-b border-white/10 bg-[color:rgba(0,23,45,0.92)] text-white backdrop-blur-xl shadow-[0_12px_30px_rgba(0,0,0,0.18)]">
         <div class="bookletto-shell flex min-h-16 flex-col gap-4 py-4 md:min-h-20 md:flex-row md:items-center md:justify-between">
             <div class="flex items-center justify-between gap-4">
