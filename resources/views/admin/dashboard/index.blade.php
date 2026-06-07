@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <div class="grid gap-6">
+    <div class="grid gap-6 px-4">
         <!-- Top stats cards -->
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 p-1">
             <div class="bookletto-card p-5 bg-white text-[color:var(--bookletto-navy)]">
                 <p class="text-xs text-[color:var(--bookletto-text-mid)]">Pendapatan bulan ini</p>
                 <p class="mt-2 text-2xl font-semibold">Rp {{ number_format($stats['revenue'], 0, ',', '.') }}</p>
@@ -31,7 +31,7 @@
         </div>
 
         <!-- Main grid: trend + side columns -->
-        <div class="grid gap-6 lg:grid-cols-[1fr_360px]">
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
             <div class="space-y-6">
                 <!-- Recent orders (Perlu Tindakan) -->
                 <div class="bookletto-card p-6 bg-white">
