@@ -1,9 +1,15 @@
 <style>
 /* Minimal subset of the provided design for featured card */
-.feat-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.feat-wrap{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+@media (min-width: 640px) {
+    .feat-wrap{grid-template-columns:1fr 1fr}
+}
+@media (min-width: 1024px) {
+    .feat-wrap{grid-template-columns:1fr 1fr 1fr 1fr}
+}
 .feat-card{background:var(--bookletto-cream);border-radius:18px;padding:20px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,0.12)}
 .feat-tag{display:inline-flex;align-items:center;gap:6px;background:var(--bookletto-gold-pale);color:var(--bookletto-gold);font-size:11px;font-weight:700;padding:6px 10px;border-radius:999px;margin-bottom:12px}
-.feat-cover{width:100%;height:180px;border-radius:12px;background:linear-gradient(160deg,#001427,#003870);display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:14px;position:relative;overflow:hidden}
+.feat-cover{width:100%;aspect-ratio:4/5;border-radius:12px;background:linear-gradient(160deg,#001427,#003870);display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:14px;position:relative;overflow:hidden}
 .feat-cover::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(to bottom,var(--bookletto-gold-light),var(--bookletto-gold))}
 .feat-genre{font-size:11px;font-weight:700;color:var(--bookletto-gold);margin-bottom:6px}
 .feat-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--bookletto-navy);margin-bottom:6px}

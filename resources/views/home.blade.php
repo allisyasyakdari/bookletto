@@ -67,7 +67,7 @@
         <div class="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             @foreach ($bestSellers as $book)
                 <a href="{{ route('books.show', $book) }}" class="bookletto-book-card group block bg-white p-4">
-                    <div class="bookletto-book-cover relative h-64 bg-[linear-gradient(135deg,rgba(6,20,35,0.95),rgba(201,166,58,0.65))]">
+                    <div class="bookletto-book-cover relative aspect-[4/5] bg-[linear-gradient(135deg,rgba(6,20,35,0.95),rgba(201,166,58,0.65))]">
                         @if($book->cover_image)
                             <img src="{{ \Illuminate\Support\Facades\Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="absolute inset-0 h-full w-full object-cover">
                         @endif

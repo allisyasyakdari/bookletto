@@ -9,7 +9,7 @@
 </head>
 <body class="bg-[color:var(--bookletto-cream)] overflow-x-hidden">
     <div class="flex flex-col min-h-screen lg:flex-row">
-        <aside class="bg-[color:var(--bookletto-navy-deep)] text-white w-72 fixed inset-y-0 left-0 flex h-screen flex-col overflow-hidden" style="position:fixed !important;top:0;left:0;bottom:0;width:18rem;z-index:50;">
+        <aside class="bg-[color:var(--bookletto-navy-deep)] text-white w-full lg:w-72 relative lg:fixed lg:inset-y-0 lg:left-0 flex flex-col h-auto lg:h-screen overflow-hidden z-50">
             <div class="flex h-20 items-center justify-between px-6 lg:justify-start">
                 <span class="font-display text-3xl">Book<span class="text-[color:var(--bookletto-gold)]">Letto</span></span>
                 <a href="{{ route('home') }}" class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/70 lg:hidden">Site</a>
@@ -38,7 +38,7 @@
             </div>
         </aside>
 
-        <div class="min-w-0 flex flex-1 flex-col lg:ml-72" style="margin-left:18rem;">
+        <div class="min-w-0 flex flex-1 flex-col lg:ml-72">
             <main class="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
                 @if (session('status'))
                     <div class="bookletto-card mb-6 px-5 py-4">{{ session('status') }}</div>

@@ -145,7 +145,7 @@
                     @foreach ($relatedBooks as $relatedBook)
                         <div class="relative group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-[color:var(--bookletto-border)] bg-white shadow-[0_14px_40px_rgba(6,20,35,0.06)] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(6,20,35,0.12)]">
                             <a href="{{ route('books.show', $relatedBook) }}" class="block">
-                                <div class="relative h-64 overflow-hidden bg-[color:var(--bookletto-navy)]">
+                                <div class="relative aspect-[4/5] overflow-hidden bg-[color:var(--bookletto-navy)]">
                                     @if($relatedBook->cover_image)
                                         <img src="{{ \Illuminate\Support\Facades\Storage::url($relatedBook->cover_image) }}" alt="{{ $relatedBook->title }}" class="absolute inset-0 h-full w-full object-cover">
                                     @else
