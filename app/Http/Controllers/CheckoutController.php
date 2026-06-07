@@ -256,11 +256,32 @@ class CheckoutController extends Controller
 
         // Simulate: mark as paid after 15 seconds for demo
         if ($order->payment_method === 'qris' && $order->placed_at && now()->diffInSeconds($order->placed_at) >= 15) {
-            $order->update(['payment_status' => 'paid', 'status' => 'paid']);
+            $order->update(['payment_status' => 'paid', 'status' => 'processing']);
             return response()->json(['paid' => true]);
         }
 
         return response()->json(['paid' => false]);
+    }
+
+    /**
+     * Complete payment for transfer / qris order immediately (simulate/auto-confirm).
+     */
+    public function simulatePayment(Order $order, Request $request)
+    {
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if ($order->payment_status === 'paid') {
+            return redirect()->route('checkout.success', $order)->with('status', 'Pembayaran sudah dikonfirmasi.');
+        }
+
+        $order->update([
+            'payment_status' => 'paid',
+            'status'         => 'processing',
+        ]);
+
+        return redirect()->route('checkout.success', $order)->with('status', 'Pembayaran berhasil disimulasikan!');
     }
 
     // ─────────────────────────────────────────────

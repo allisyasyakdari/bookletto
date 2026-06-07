@@ -4,18 +4,20 @@
     <section class="bookletto-shell py-12 lg:py-20">
         <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
             <div class="bookletto-card bg-white p-5">
-                <div class="bookletto-book-cover relative aspect-[4/5] overflow-hidden bg-[linear-gradient(135deg,rgba(6,20,35,0.95),rgba(201,166,58,0.65))]">
+                <div class="bookletto-book-cover relative aspect-[4/5] overflow-hidden">
                     @if($book->cover_image)
                         <img src="{{ \Illuminate\Support\Facades\Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="absolute inset-0 h-full w-full object-cover">
-                    @endif
-                    <span class="bookletto-book-spine"></span>
-                    <div class="absolute inset-0 flex flex-col justify-between p-6 text-white">
-                        <div class="text-right text-xs uppercase tracking-[0.35em] text-white/70">Bookletto</div>
-                        <div>
-                            <p class="font-display text-5xl font-semibold">{{ $book->title }}</p>
-                            <p class="mt-2 text-sm text-white/70">{{ $book->author }}</p>
+                    @else
+                        <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(6,20,35,0.95),rgba(201,166,58,0.65))]"></div>
+                        <span class="bookletto-book-spine"></span>
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 text-white">
+                            <div class="text-right text-xs uppercase tracking-[0.35em] text-white/70">Bookletto</div>
+                            <div>
+                                <p class="font-display text-5xl font-semibold">{{ $book->title }}</p>
+                                <p class="mt-2 text-sm text-white/70">{{ $book->author }}</p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <div>
@@ -141,21 +143,36 @@
                 <h2 class="bookletto-section-title mt-3">Buku yang Sejalan</h2>
                 <div class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                     @foreach ($relatedBooks as $relatedBook)
-                        <a href="{{ route('books.show', $relatedBook) }}" class="bookletto-book-card bg-white p-4">
-                            <div class="bookletto-book-cover relative h-64 bg-[linear-gradient(135deg,rgba(6,20,35,0.95),rgba(201,166,58,0.65))]">
-                                @if($relatedBook->cover_image)
-                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($relatedBook->cover_image) }}" alt="{{ $relatedBook->title }}" class="absolute inset-0 h-full w-full object-cover">
-                                @endif
-                                <span class="bookletto-book-spine"></span>
-                                <div class="absolute inset-0 flex flex-col justify-between p-5 text-white">
-                                    <p class="text-xs uppercase tracking-[0.3em] text-white/70">{{ $relatedBook->category->name }}</p>
-                                    <div>
-                                        <p class="font-display text-2xl font-semibold">{{ $relatedBook->title }}</p>
-                                        <p class="text-sm text-white/70">{{ $relatedBook->author }}</p>
+                        <div class="relative group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-[color:var(--bookletto-border)] bg-white shadow-[0_14px_40px_rgba(6,20,35,0.06)] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(6,20,35,0.12)]">
+                            <a href="{{ route('books.show', $relatedBook) }}" class="block">
+                                <div class="relative h-64 overflow-hidden bg-[color:var(--bookletto-navy)]">
+                                    @if($relatedBook->cover_image)
+                                        <img src="{{ \Illuminate\Support\Facades\Storage::url($relatedBook->cover_image) }}" alt="{{ $relatedBook->title }}" class="absolute inset-0 h-full w-full object-cover">
+                                    @else
+                                        <div class="absolute inset-0 {{ $relatedBook->cover_gradient ?? 'bg-gradient-to-br from-blue-900 to-indigo-950' }}"></div>
+                                        <div class="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(4,18,32,0.08),rgba(4,18,32,0.92))]"></div>
+                                        <div class="absolute bottom-4 left-4 right-4 z-20">
+                                            <p class="font-display text-2xl font-semibold leading-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] line-clamp-2">{{ $relatedBook->title }}</p>
+                                            <p class="mt-1 text-sm text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">{{ $relatedBook->author }}</p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </a>
+                            <div class="flex flex-1 flex-col justify-between p-4">
+                                <div>
+                                    <h4 class="font-display text-lg font-bold text-[color:var(--bookletto-navy)] line-clamp-1 mb-1" title="{{ $relatedBook->title }}">{{ $relatedBook->title }}</h4>
+                                    <p class="text-xs text-[color:var(--bookletto-text-mid)] mb-3">{{ $relatedBook->author }}</p>
+                                    
+                                    <div class="flex items-center justify-between gap-3">
+                                        <span class="rounded-full bg-[color:var(--bookletto-gold-pale)] px-3 py-1 text-xs font-semibold text-[color:var(--bookletto-navy)]">{{ $relatedBook->published_year }}</span>
+                                        <span class="text-sm font-semibold text-[color:var(--bookletto-gold)]">Rp {{ number_format($relatedBook->price, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
+                                <div class="mt-4">
+                                    <a href="{{ route('books.show', $relatedBook) }}" class="rounded-full bg-[color:var(--bookletto-cream)] px-3 py-1 text-xs font-semibold text-[color:var(--bookletto-navy)] inline-block">Lihat detail</a>
+                                </div>
                             </div>
-                        </a>
+                        </div>
                     @endforeach
                 </div>
             </div>

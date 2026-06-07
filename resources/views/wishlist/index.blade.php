@@ -21,17 +21,20 @@
                                     <img src="{{ \Illuminate\Support\Facades\Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="absolute inset-0 h-full w-full object-cover">
                                 @else
                                     <div class="absolute inset-0 {{ $book->cover_gradient }}"></div>
+                                    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,18,32,0.12),rgba(4,18,32,0.84))]"></div>
+                                    <div class="absolute bottom-4 left-4 right-4 z-20">
+                                        <p class="font-display text-2xl font-semibold leading-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] line-clamp-2">{{ $book->title }}</p>
+                                        <p class="mt-1 text-sm text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">{{ $book->author }}</p>
+                                    </div>
                                 @endif
-                                <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,18,32,0.12),rgba(4,18,32,0.84))]"></div>
                                 <span class="absolute left-4 top-4 rounded-full border border-white/15 bg-white/92 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-[color:var(--bookletto-navy)] shadow-sm">Wishlist</span>
-                                <div class="absolute bottom-4 left-4 right-4">
-                                    <p class="font-display text-2xl font-semibold leading-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] line-clamp-2">{{ $book->title }}</p>
-                                    <p class="mt-1 text-sm text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">{{ $book->author }}</p>
-                                </div>
                             </div>
                         </a>
                         <div class="flex items-center justify-between gap-3 p-4">
                             <div>
+                                <h4 class="font-display text-lg font-bold text-[color:var(--bookletto-navy)] line-clamp-1 mb-1" title="{{ $book->title }}">{{ $book->title }}</h4>
+                                <p class="text-xs text-[color:var(--bookletto-text-mid)] mb-3">{{ $book->author }}</p>
+
                                 <p class="text-xs uppercase tracking-[0.25em] text-[color:var(--bookletto-text-light)]">{{ $book->category->name }}</p>
                                 <p class="mt-1 font-semibold text-[color:var(--bookletto-navy)]">Rp {{ number_format($book->price, 0, ',', '.') }}</p>
                             </div>

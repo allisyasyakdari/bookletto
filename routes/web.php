@@ -55,6 +55,8 @@ Route::middleware(['auth', 'customer'])->group(function () {
     Route::get('/checkout/districts', [CheckoutController::class, 'getDistricts'])->name('checkout.districts');
     Route::get('/checkout/shipping', [CheckoutController::class, 'getShipping'])->name('checkout.shipping');
     Route::get('/checkout/payment-status/{order}', [CheckoutController::class, 'checkPayment'])->name('checkout.payment_status');
+    Route::post('/checkout/pay/{order}', [CheckoutController::class, 'simulatePayment'])->name('checkout.simulate_payment');
+    Route::post('/orders/{order}/complete', [UserDashboardController::class, 'completeOrder'])->name('orders.complete');
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {

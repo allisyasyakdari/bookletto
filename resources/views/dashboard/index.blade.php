@@ -30,7 +30,7 @@
                 <div class="grid grid-cols-2 gap-3 text-sm lg:min-w-[320px]">
                     <div class="rounded-[1.25rem] border border-[color:var(--bookletto-border)] bg-white p-4 shadow-[0_10px_30px_rgba(6,20,35,0.06)] backdrop-blur">
                         <div class="text-[11px] uppercase tracking-[0.28em] text-[color:var(--bookletto-text-light)]">Buku</div>
-                        <div class="mt-2 text-2xl font-semibold text-[color:var(--bookletto-navy)]">{{ number_format($heroCount) }}+</div>
+                        <div class="mt-2 text-2xl font-semibold text-[color:var(--bookletto-navy)]">{{ $totalBooksCount }}</div>
                     </div>
                     <div class="rounded-[1.25rem] border border-[color:var(--bookletto-border)] bg-white p-4 shadow-[0_10px_30px_rgba(6,20,35,0.06)] backdrop-blur">
                         <div class="text-[11px] uppercase tracking-[0.28em] text-[color:var(--bookletto-text-light)]">Genre</div>
@@ -92,16 +92,16 @@
                 <div class="relative group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-[color:var(--bookletto-border)] bg-white shadow-[0_14px_40px_rgba(6,20,35,0.06)] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(6,20,35,0.12)]">
                     <a href="{{ route('books.show', $book->slug) }}" class="block">
                         <div class="relative h-64 overflow-hidden bg-[color:var(--bookletto-navy)]">
-                            <div class="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(4,18,32,0.08),rgba(4,18,32,0.92))]"></div>
                             @if($book->cover_image)
-                                <img src="{{ \Illuminate\Support\Facades\Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="absolute inset-0 h-full w-full object-cover opacity-100">
+                                <img src="{{ \Illuminate\Support\Facades\Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="absolute inset-0 h-full w-full object-cover">
                             @else
                                 <div class="absolute inset-0 {{ $book->cover_gradient }}"></div>
+                                <div class="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(4,18,32,0.08),rgba(4,18,32,0.92))]"></div>
+                                <div class="absolute bottom-4 left-4 right-16 z-20">
+                                    <p class="font-display text-2xl font-semibold leading-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] line-clamp-2">{{ $book->title }}</p>
+                                    <p class="mt-1 text-sm text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">{{ $book->author }}</p>
+                                </div>
                             @endif
-                            <div class="absolute bottom-4 left-4 right-16 z-20">
-                                <p class="font-display text-2xl font-semibold leading-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] line-clamp-2">{{ $book->title }}</p>
-                                <p class="mt-1 text-sm text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">{{ $book->author }}</p>
-                            </div>
                         </div>
                     </a>
                     <div class="absolute right-4 top-4 z-30">
@@ -129,6 +129,9 @@
                     </div>
                     <div class="flex flex-1 flex-col justify-between p-4">
                         <div>
+                            <h4 class="font-display text-xl font-bold text-[color:var(--bookletto-navy)] line-clamp-1 mb-1" title="{{ $book->title }}">{{ $book->title }}</h4>
+                            <p class="text-xs text-[color:var(--bookletto-text-mid)] mb-3">{{ $book->author }}</p>
+
                             <div class="flex items-center justify-between gap-3">
                                 <span class="rounded-full bg-[color:var(--bookletto-gold-pale)] px-3 py-1 text-xs font-semibold text-[color:var(--bookletto-navy)]">{{ $book->published_year }}</span>
                                 <span class="text-sm font-semibold text-[color:var(--bookletto-gold)]">Rp {{ number_format($book->price, 0, ',', '.') }}</span>

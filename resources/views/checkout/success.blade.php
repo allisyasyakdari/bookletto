@@ -33,6 +33,13 @@
             Menunggu konfirmasi pembayaran...
         </div>
 
+        <form action="{{ route('checkout.simulate_payment', $order) }}" method="post" class="mt-4">
+            @csrf
+            <button type="submit" class="text-xs text-[color:var(--bookletto-text-light)] hover:text-[color:var(--bookletto-gold)] transition underline bg-transparent border-0 cursor-pointer">
+                Simulasikan Pembayaran Berhasil (Instan)
+            </button>
+        </form>
+
         <p class="mt-5 text-xs text-[color:var(--bookletto-text-light)]">
             Buka aplikasi m-banking atau e-wallet Anda dan scan QR di atas.<br>
             Status akan diperbarui otomatis setelah pembayaran berhasil.
@@ -120,8 +127,11 @@
 
         <p class="mt-4 text-xs text-[color:var(--bookletto-text-light)]">Harap transfer tepat sesuai nominal agar pesanan lebih mudah diverifikasi. Konfirmasi pembayaran dapat dilakukan melalui WhatsApp atau email kami.</p>
 
-        <div class="mt-6 flex flex-wrap gap-3">
-            <a href="{{ route('home') }}" class="bookletto-button-primary">Kembali ke Home</a>
+        <div class="mt-6 flex flex-wrap gap-3 items-center">
+            <form action="{{ route('checkout.simulate_payment', $order) }}" method="post" class="inline">
+                @csrf
+                <button type="submit" class="bookletto-button-primary">Saya Sudah Transfer (Konfirmasi Otomatis)</button>
+            </form>
             <a href="{{ route('orders') }}" class="bookletto-button-secondary">Pesanan Saya</a>
         </div>
     </div>

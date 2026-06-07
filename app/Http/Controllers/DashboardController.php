@@ -92,7 +92,9 @@ class DashboardController extends Controller
             $q->whereNull('expired_at')->orWhere('expired_at', '>', Carbon::now());
         })->orderByDesc('discount')->take(4)->get();
 
-        return view('dashboard.index', compact('recommended', 'bestsellers', 'latest', 'wishlist', 'orders', 'promos', 'categories', 'selectedCategory', 'searchTerm'));
+        $totalBooksCount = Book::count();
+
+        return view('dashboard.index', compact('recommended', 'bestsellers', 'latest', 'wishlist', 'orders', 'promos', 'categories', 'selectedCategory', 'searchTerm', 'totalBooksCount'));
     }
 
     /**
@@ -121,5 +123,19 @@ class DashboardController extends Controller
                 ->get()
             : collect();
         return view('orders.index', compact('orders'));
+    }
+
+    /**
+     * Complete an order (confirm receipt).
+     */
+    public function completeOrder(Order $order, Request $request)
+    {
+        if ($order->user_id !== $request->user()->id || $order->status !== 'shipped') {
+            abort(403);
+        }
+
+        $order->update(['status' => 'completed']);
+
+        return back()->with('status', 'Pesanan selesai! Terima kasih telah berbelanja.');
     }
 }
